@@ -4,18 +4,34 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
+import com.flasska.findata.entity.ExpenseDb
+import com.flasska.findata.entity.ExpenseTypeDb
+import com.flasska.findata.entity.ExpenseValueDb
 
 @Dao
 interface ExpenseDao {
     @Insert
-    fun addExpense(value: ExpenseDb)
+    fun addExpenseValue(value: ExpenseValueDb)
+
+    @Insert
+    fun addExpenseType(type: ExpenseTypeDb)
 
     @Delete
-    fun deleteExpense(value: ExpenseDb)
+    fun deleteExpenseValue(value: ExpenseValueDb)
 
-    @Query("SELECT * FROM ExpenseDb")
-    fun getAll(): List<ExpenseDb>
+    @Delete
+    fun deleteExpenseType(type: ExpenseTypeDb)
 
-    @Query("SELECT * FROM EXPENSEDB WHERE date_time >= :startDate AND date_time <= :endDate")
-    fun getAllInDateRange(startDate: Long, endDate: Long): List<ExpenseDb>
+    @Transaction
+    @Query("SELECT * FROM ExpenseValueDb")
+    suspend fun getAll(): List<ExpenseDb>
+
+    @Transaction
+    @Query("SELECT * FROM ExpenseValueDb WHERE date_time >= :startDate AND date_time <= :endDate")
+    suspend fun getAllInDateRange(startDate: Long, endDate: Long): List<ExpenseDb>
+
+    @Transaction
+    @Query("SELECT * FROM ExpenseTypeDb")
+    suspend fun getTypes(): List<ExpenseTypeDb>
 }
