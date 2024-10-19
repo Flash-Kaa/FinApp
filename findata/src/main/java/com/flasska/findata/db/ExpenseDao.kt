@@ -1,13 +1,13 @@
-package com.flasska.findata
+package com.flasska.findata.db
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.flasska.findata.entity.ExpenseDb
-import com.flasska.findata.entity.ExpenseTypeDb
-import com.flasska.findata.entity.ExpenseValueDb
+import com.flasska.findata.db.entity.ExpenseDb
+import com.flasska.findata.db.entity.ExpenseTypeDb
+import com.flasska.findata.db.entity.ExpenseValueDb
 
 @Dao
 interface ExpenseDao {

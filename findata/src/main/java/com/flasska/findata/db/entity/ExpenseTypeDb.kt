@@ -1,4 +1,4 @@
-package com.flasska.findata.entity
+package com.flasska.findata.db.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
