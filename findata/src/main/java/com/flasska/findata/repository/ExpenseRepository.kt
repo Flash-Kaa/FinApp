@@ -7,7 +7,7 @@ import com.flasska.findomain.repository.Repository
 
 class ExpenseRepository(
     private val dao: ExpenseDao
-): Repository<Expense> {
+) : Repository<Expense> {
     override suspend fun getAll(): List<Expense> {
         return dao.getAll().map { it.convert() }
     }

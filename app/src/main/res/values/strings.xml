@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">FinApp</string>
+    <string name="app_name">My Expenses</string>
+    <string name="create">Создать</string>
+    <string name="expense">Трата</string>
+    <string name="add_expense">Добавление траты</string>
+    <string name="add_type">Создание категории трат</string>
+    <string name="type">Категория</string>
+    <string name="name">Название</string>
+    <string name="add">Добавить</string>
 </resources>
