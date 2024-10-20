@@ -1,4 +1,4 @@
-package com.flasska.finapp.ui.elements.dialogadd.expense
+package com.flasska.finapp.ui.elements.dialog.expense
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -53,6 +53,8 @@ internal class ExpenseAddingViewModel(
                     addUseCase(Expense(0, LocalDateTime.now(), float, it))
                 }
             }
+
+            _state.update { DialogAddState() }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.flasska.finapp.ui.elements.dialogadd.type
+package com.flasska.finapp.ui.elements.dialog.type
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

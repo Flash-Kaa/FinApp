@@ -1,4 +1,4 @@
-package com.flasska.finapp.ui.elements.dialogadd.expense
+package com.flasska.finapp.ui.elements.dialog.expense
 
 import com.flasska.findomain.entity.Expense
 

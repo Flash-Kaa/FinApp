@@ -23,8 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.flasska.finapp.R
-import com.flasska.finapp.ui.elements.dialogadd.expense.ExpenseAddingDialog
 import com.flasska.finapp.ui.elements.ExpenseList
+import com.flasska.finapp.ui.elements.dialog.expense.ExpenseAddingDialog
 import com.flasska.finapp.ui.utils.DateUtils.getDateInFormat
 
 @Composable

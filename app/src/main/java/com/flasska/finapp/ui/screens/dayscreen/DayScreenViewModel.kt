@@ -5,24 +5,28 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.flasska.findomain.usecase.GetDayStatisticUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 internal class DayScreenViewModel(
     date: LocalDate,
 
     private val getDayStatisticUseCase: GetDayStatisticUseCase
 ) : ViewModel() {
-    private val _state = MutableStateFlow(DayScreenState())
+    private val _state = MutableStateFlow(DayScreenState(date = date))
     val state = _state.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            updateByDate(date)
+            while (true) {
+                val expenses = getDayStatisticUseCase(state.value.date)
+                _state.update { it.copy(expenses = expenses) }
+                delay(500)
+            }
         }
     }
 
@@ -35,21 +39,14 @@ internal class DayScreenViewModel(
 
     private fun toNextDay() {
         viewModelScope.launch(Dispatchers.IO) {
-            val date = state.value.date.plusDays(1)
-            updateByDate(date)
+            _state.update { it.copy(date = it.date.plusDays(1)) }
         }
     }
 
     private fun toPrevDay() {
         viewModelScope.launch(Dispatchers.IO) {
-            val date = state.value.date.minusDays(1)
-            updateByDate(date)
+            _state.update { it.copy(date = it.date.minusDays(1)) }
         }
-    }
-
-    private suspend fun DayScreenViewModel.updateByDate(date: LocalDate) {
-        val list = getDayStatisticUseCase(date)
-        _state.update { it.copy(date = date, expenses = list) }
     }
 
     class FactoryWrapper(

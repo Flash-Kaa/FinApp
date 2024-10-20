@@ -21,7 +21,10 @@ object ExpenseMapperUtils {
     fun ExpenseDb.convert(): Expense {
         return Expense(
             id = expanse.id,
-            dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(expanse.dateTime), ZoneId.systemDefault()),
+            dateTime = LocalDateTime.ofInstant(
+                Instant.ofEpochSecond(expanse.dateTime),
+                ZoneId.systemDefault()
+            ),
             value = expanse.value,
             type = type.convert()
         )

@@ -12,7 +12,6 @@ class GetDayStatisticUseCase(
         date: LocalDate
     ): List<Expense> {
         val dateTimeStart = date.atStartOfDay()
-
         val dateTimeEnd = dateTimeStart.plusDays(1)
 
         val start = dateTimeStart.toEpochSecond(ZoneOffset.UTC)

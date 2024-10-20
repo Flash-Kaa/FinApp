@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 
 class ExpenseTypeRepository(
     private val dao: ExpenseDao
-): Repository<Expense.Type> {
+) : Repository<Expense.Type> {
     private val _flow = MutableStateFlow<List<Expense.Type>>(listOf())
     val flow = _flow.asSharedFlow()
 

@@ -1,7 +1,7 @@
 package com.flasska.finapp.di
 
-import com.flasska.finapp.ui.elements.dialogadd.expense.ExpenseAddingViewModel
-import com.flasska.finapp.ui.elements.dialogadd.type.ExpenseTypeAddingViewModel
+import com.flasska.finapp.ui.elements.dialog.expense.ExpenseAddingViewModel
+import com.flasska.finapp.ui.elements.dialog.type.ExpenseTypeAddingViewModel
 import com.flasska.finapp.ui.screens.dayscreen.DayScreenViewModel
 import com.flasska.findomain.entity.Expense
 import com.flasska.findomain.usecase.AddUseCase

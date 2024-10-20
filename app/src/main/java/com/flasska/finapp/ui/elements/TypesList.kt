@@ -30,7 +30,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flasska.finapp.R
-import com.flasska.finapp.ui.elements.dialogadd.type.ExpenseTypeAddingDialog
+import com.flasska.finapp.ui.elements.dialog.type.ExpenseTypeAddingDialog
 import com.flasska.finapp.ui.theme.FinAppTheme
 import com.flasska.findomain.entity.Expense
 

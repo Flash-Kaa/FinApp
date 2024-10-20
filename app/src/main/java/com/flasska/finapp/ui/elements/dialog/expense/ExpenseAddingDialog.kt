@@ -1,4 +1,4 @@
-package com.flasska.finapp.ui.elements.dialogadd.expense
+package com.flasska.finapp.ui.elements.dialog.expense
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
