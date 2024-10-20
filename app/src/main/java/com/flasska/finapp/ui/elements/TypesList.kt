@@ -38,17 +38,17 @@ fun TypesList(
     types: List<Expense.Type>,
     chosen: Expense.Type?,
     onChoose: (Expense.Type) -> Unit,
+    onSaveNewType: (Expense.Type) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var createTypeDialogIsOpen: Boolean by remember { mutableStateOf(false) }
 
-    // TODO: use LazyHorizontalStaggeredGrid
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier.fillMaxWidth()
     ) {
         items(types) {
-            Type(
+            TypeDrawer(
                 type = it,
                 isChosen = it == chosen,
                 onClick = { onChoose(it) }
@@ -56,7 +56,7 @@ fun TypesList(
         }
 
         item {
-            Element(
+            ElementDrawer(
                 text = stringResource(R.string.create),
                 onClick = {
                     createTypeDialogIsOpen = true
@@ -70,22 +70,23 @@ fun TypesList(
         }
     }
 
-    ExpenseTypeAddingDialog(
-        onExit = {
-            createTypeDialogIsOpen = false
-        },
-        onSave = { /*TODO*/ }
-    )
+    if (createTypeDialogIsOpen) {
+        ExpenseTypeAddingDialog(
+            onExit = {
+                createTypeDialogIsOpen = false
+            },
+            onSave = onSaveNewType
+        )
+    }
 }
 
-
 @Composable
-private fun Type(
+fun TypeDrawer(
     type: Expense.Type,
     isChosen: Boolean,
     onClick: () -> Unit,
 ) {
-    Element(
+    ElementDrawer(
         text = type.name,
         isChosen = isChosen,
         onClick = onClick
@@ -99,7 +100,7 @@ private fun Type(
 }
 
 @Composable
-private fun Element(
+private fun ElementDrawer(
     text: String,
     isChosen: Boolean = false,
     onClick: () -> Unit,
@@ -147,6 +148,7 @@ private fun TypesListPreview() {
                 Expense.Type(0, "name43qw", color = Color.Red.toArgb()),
             ),
             onChoose = {},
+            onSaveNewType = {},
             chosen = Expense.Type(0, "nameqw", color = Color.Red.toArgb())
         )
     }
