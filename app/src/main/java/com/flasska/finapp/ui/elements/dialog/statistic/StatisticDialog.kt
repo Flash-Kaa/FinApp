@@ -85,27 +85,29 @@ private fun StatisticDialog(
                     .padding(16.dp)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            if (screenState.typeToSum.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = stringResource(R.string.expenses_by_type),
-                style = MaterialTheme.typography.titleSmall,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
+                Text(
+                    text = stringResource(R.string.expenses_by_type),
+                    style = MaterialTheme.typography.titleSmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
+                )
 
-            ExpenseList(
-                list = screenState.typeToSum.toList().map {
-                    Expense(
-                        id = 0,
-                        dateTime = LocalDate.now(),
-                        value = it.second,
-                        type = it.first
-                    )
-                }
-            )
+                ExpenseList(
+                    list = screenState.typeToSum.toList().map {
+                        Expense(
+                            id = 0,
+                            dateTime = LocalDate.now(),
+                            value = it.second,
+                            type = it.first
+                        )
+                    }
+                )
+            }
         }
     }
 }
