@@ -5,6 +5,7 @@ import com.flasska.findata.repository.ExpenseRepository
 import com.flasska.findata.repository.ExpenseTypeRepository
 import com.flasska.findomain.entity.Expense
 import com.flasska.findomain.repository.Repository
+import com.flasska.findomain.repository.StatisticRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -24,4 +25,10 @@ internal class RepositoriesModule {
     fun provideExpenseTypeRepository(
         dao: ExpenseDao
     ): Repository<Expense.Type> = ExpenseTypeRepository(dao)
+
+    @Provides
+    @Singleton
+    fun provideStatisticRepository(
+        dao: ExpenseDao
+    ): StatisticRepository = com.flasska.findata.repository.StatisticRepository(dao)
 }
