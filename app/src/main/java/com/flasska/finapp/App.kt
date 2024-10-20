@@ -4,7 +4,7 @@ import android.app.Application
 import com.flasska.finapp.di.AppComponent
 import com.flasska.finapp.di.DaggerAppComponent
 
-internal class App: Application() {
+internal class App : Application() {
     lateinit var appComponent: AppComponent
 
     private fun initDagger() {

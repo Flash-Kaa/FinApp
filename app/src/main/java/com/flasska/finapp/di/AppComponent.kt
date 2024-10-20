@@ -1,18 +1,17 @@
 package com.flasska.finapp.di
 
 import android.content.Context
+import com.flasska.finapp.ui.screens.dayscreen.DayScreenViewModel
 import com.flasska.findata.di.UseCasesModule
-import com.flasska.findomain.entity.Expense
-import com.flasska.findomain.usecase.GetAllUseCase
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = [UseCasesModule::class])
+@Component(modules = [UseCasesModule::class, ViewModelFactoryModule::class])
 internal interface AppComponent {
-    fun getAllUseCase(): GetAllUseCase<Expense>
+    fun provideDayScreenViewModelFactoryWrapper(): DayScreenViewModel.FactoryWrapper
 
     @Component.Builder
     interface Builder {

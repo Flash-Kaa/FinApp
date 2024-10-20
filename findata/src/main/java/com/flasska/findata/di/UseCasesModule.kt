@@ -2,9 +2,12 @@ package com.flasska.findata.di
 
 import com.flasska.findomain.entity.Expense
 import com.flasska.findomain.repository.Repository
+import com.flasska.findomain.repository.StatisticRepository
 import com.flasska.findomain.usecase.AddUseCase
 import com.flasska.findomain.usecase.DeleteUseCase
 import com.flasska.findomain.usecase.GetAllUseCase
+import com.flasska.findomain.usecase.GetDayStatisticUseCase
+import com.flasska.findomain.usecase.GetMonthStatisticUseCase
 import dagger.Module
 import dagger.Provides
 
@@ -39,4 +42,14 @@ class UseCasesModule {
     fun provideDeleteUseCaseForExpenses(
         @ExpenseRepositoryQualifier repository: Repository<Expense>
     ) = DeleteUseCase(repository)
+
+    @Provides
+    fun provideGetDayStatisticUseCase(
+        repository: StatisticRepository
+    ) = GetDayStatisticUseCase(repository)
+
+    @Provides
+    fun provideGetMonthStatisticRepository(
+        repository: StatisticRepository
+    ) = GetMonthStatisticUseCase(repository)
 }

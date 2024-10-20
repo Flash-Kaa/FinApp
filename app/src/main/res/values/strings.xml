@@ -8,4 +8,6 @@
     <string name="name">Название</string>
     <string name="add">Добавить</string>
     <string name="color">Цвет</string>
+    <string name="see_one_day_ago">Показать предыдущий день</string>
+    <string name="see_one_day_next">Показать следующий день</string>
 </resources>

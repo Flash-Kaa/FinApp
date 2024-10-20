@@ -96,6 +96,7 @@ fun ExpenseAddingDialog(
                         typeIsError = false
                     )
                 },
+                onSaveNewType = {},
                 modifier = Modifier.padding(top = 4.dp, bottom = 32.dp)
             )
 

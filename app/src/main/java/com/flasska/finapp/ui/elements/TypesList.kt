@@ -83,13 +83,15 @@ fun TypesList(
 @Composable
 fun TypeDrawer(
     type: Expense.Type,
-    isChosen: Boolean,
-    onClick: () -> Unit,
+    isChosen: Boolean = false,
+    isClickable: Boolean = true,
+    onClick: () -> Unit = {},
 ) {
     ElementDrawer(
         text = type.name,
         isChosen = isChosen,
-        onClick = onClick
+        onClick = onClick,
+        isClickable = isClickable
     ) {
         Box(
             modifier = Modifier
@@ -102,9 +104,10 @@ fun TypeDrawer(
 @Composable
 private fun ElementDrawer(
     text: String,
-    isChosen: Boolean = false,
     onClick: () -> Unit,
-    icon: @Composable () -> Unit
+    isChosen: Boolean = false,
+    isClickable: Boolean = true,
+    icon: @Composable () -> Unit = {}
 ) {
     val background = if (isChosen) {
         MaterialTheme.colorScheme.primaryContainer
@@ -120,7 +123,7 @@ private fun ElementDrawer(
                 shape = CircleShape
             )
             .clip(CircleShape)
-            .clickable(onClick = onClick)
+            .clickable(enabled = isClickable, onClick = onClick)
             .padding(4.dp)
     ) {
         Box(
