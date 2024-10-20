@@ -1,4 +1,4 @@
-package com.flasska.finapp.ui.elements
+package com.flasska.finapp.ui.elements.dialogadd.expense
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,36 +12,51 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.flasska.finapp.AppUtils.appComponent
 import com.flasska.finapp.R
+import com.flasska.finapp.ui.elements.CustomTextField
+import com.flasska.finapp.ui.elements.TopColorLine
+import com.flasska.finapp.ui.elements.TypesList
 import com.flasska.finapp.ui.theme.FinAppTheme
-import com.flasska.findomain.entity.Expense
-import java.time.LocalDateTime
-
-private data class State(
-    val value: String = "",
-    val valueIsError: Boolean = true,
-    val type: Expense.Type? = null,
-    val typeIsError: Boolean = true,
-    val types: List<Expense.Type> = emptyList()
-)
 
 @Composable
 fun ExpenseAddingDialog(
     onExit: () -> Unit,
-    onSave: (Expense) -> Unit
 ) {
-    val screenState = remember { mutableStateOf(State()) }
+    val viewModel: ExpenseAddingViewModel = viewModel(
+        factory = LocalContext.current.appComponent
+            .provideExpenseViewModelFactoryWrapper()
+            .Factory()
+    )
 
+    val state: DialogAddState by viewModel.state.collectAsState(DialogAddState())
+
+
+    ExpenseAddingDialog(
+        onExit = onExit,
+        screenState = state,
+        screenEvent = viewModel::getEvent
+    )
+}
+
+@Composable
+private fun ExpenseAddingDialog(
+    onExit: () -> Unit,
+    screenState: DialogAddState,
+    screenEvent: (DialogAddEvent) -> Unit
+) {
     Dialog(onExit) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,7 +68,7 @@ fun ExpenseAddingDialog(
                 .padding(horizontal = 16.dp)
         ) {
             TopColorLine(
-                color = screenState.value.type?.color?.let { Color(it) } ?: Color.White
+                color = screenState.type?.color?.let { Color(it) } ?: Color.White
             )
 
             Text(
@@ -63,16 +78,11 @@ fun ExpenseAddingDialog(
             )
 
             CustomTextField(
-                value = screenState.value.value,
-                onValueChange = {
-                    screenState.value = screenState.value.copy(
-                        value = it,
-                        valueIsError = it.toFloatOrNull() == null
-                    )
-                },
+                value = screenState.value,
+                onValueChange = { screenEvent(DialogAddEvent.ChangeValue(it)) },
                 title = stringResource(R.string.expense),
                 keyboardType = KeyboardType.Number,
-                borderColor = if (screenState.value.run { valueIsError && value.isNotBlank() }) {
+                borderColor = if (screenState.run { valueIsError && value.isNotBlank() }) {
                     MaterialTheme.colorScheme.error
                 } else {
                     MaterialTheme.colorScheme.primary
@@ -88,28 +98,18 @@ fun ExpenseAddingDialog(
             )
 
             TypesList(
-                types = screenState.value.types,
-                chosen = screenState.value.type,
-                onChoose = {
-                    screenState.value = screenState.value.copy(
-                        type = it,
-                        typeIsError = false
-                    )
-                },
-                onSaveNewType = {},
+                types = screenState.types,
+                chosen = screenState.type,
+                onChoose = { screenEvent(DialogAddEvent.ChangeType(it)) },
                 modifier = Modifier.padding(top = 4.dp, bottom = 32.dp)
             )
 
             Button(
                 onClick = {
-                    screenState.value.type?.let { type ->
-                        val value = screenState.value.value.toFloatOrNull()
-                        if (value != null) {
-                            onSave(Expense(0, LocalDateTime.now(), value, type))
-                        }
-                    }
+                    screenEvent(DialogAddEvent.Save)
+                    onExit()
                 },
-                enabled = screenState.value.run { !valueIsError && !typeIsError },
+                enabled = screenState.run { !valueIsError && !typeIsError },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 ),
@@ -130,7 +130,8 @@ private fun Preview() {
         ) {
             ExpenseAddingDialog(
                 onExit = {},
-                onSave = {}
+                screenState = DialogAddState(),
+                screenEvent = {}
             )
         }
     }

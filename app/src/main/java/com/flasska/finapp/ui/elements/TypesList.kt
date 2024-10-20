@@ -30,6 +30,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.flasska.finapp.R
+import com.flasska.finapp.ui.elements.dialogadd.type.ExpenseTypeAddingDialog
 import com.flasska.finapp.ui.theme.FinAppTheme
 import com.flasska.findomain.entity.Expense
 
@@ -38,7 +39,6 @@ fun TypesList(
     types: List<Expense.Type>,
     chosen: Expense.Type?,
     onChoose: (Expense.Type) -> Unit,
-    onSaveNewType: (Expense.Type) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var createTypeDialogIsOpen: Boolean by remember { mutableStateOf(false) }
@@ -74,8 +74,7 @@ fun TypesList(
         ExpenseTypeAddingDialog(
             onExit = {
                 createTypeDialogIsOpen = false
-            },
-            onSave = onSaveNewType
+            }
         )
     }
 }
@@ -151,7 +150,6 @@ private fun TypesListPreview() {
                 Expense.Type(0, "name43qw", color = Color.Red.toArgb()),
             ),
             onChoose = {},
-            onSaveNewType = {},
             chosen = Expense.Type(0, "nameqw", color = Color.Red.toArgb())
         )
     }

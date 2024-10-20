@@ -1,4 +1,4 @@
-package com.flasska.finapp.ui.elements
+package com.flasska.finapp.ui.elements.dialogadd.type
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,12 +29,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.flasska.finapp.AppUtils.appComponent
 import com.flasska.finapp.R
+import com.flasska.finapp.ui.elements.CustomTextField
+import com.flasska.finapp.ui.elements.TopColorLine
 import com.flasska.finapp.ui.theme.FinAppTheme
 import com.flasska.findomain.entity.Expense
 
@@ -57,7 +62,21 @@ private val colors = listOf(
 )
 
 @Composable
-fun ExpenseTypeAddingDialog(
+fun ExpenseTypeAddingDialog(onExit: () -> Unit) {
+    val viewModel: ExpenseTypeAddingViewModel = viewModel(
+        factory = LocalContext.current.appComponent
+            .provideExpenseTypeViewModelFactoryWrapper()
+            .Factory()
+    )
+
+    ExpenseTypeAddingDialog(
+        onExit = onExit,
+        onSave = viewModel::save
+    )
+}
+
+@Composable
+private fun ExpenseTypeAddingDialog(
     onExit: () -> Unit,
     onSave: (Expense.Type) -> Unit
 ) {
@@ -91,6 +110,7 @@ fun ExpenseTypeAddingDialog(
             ColorChooser(screenState = screenState)
             CreateButton(
                 screenState = screenState,
+                onExit = onExit,
                 onSave = onSave
             )
         }
@@ -100,12 +120,14 @@ fun ExpenseTypeAddingDialog(
 @Composable
 private fun CreateButton(
     screenState: MutableState<TypeState>,
+    onExit: () -> Unit,
     onSave: (Expense.Type) -> Unit
 ) {
     Button(
         onClick = {
             screenState.value.color?.let { color ->
                 onSave(Expense.Type(color = color.toArgb(), name = screenState.value.name))
+                onExit()
             }
         },
         enabled = screenState.value.run { name.isNotBlank() && color != null },

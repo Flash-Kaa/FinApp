@@ -1,6 +1,8 @@
 package com.flasska.finapp.di
 
 import android.content.Context
+import com.flasska.finapp.ui.elements.dialogadd.expense.ExpenseAddingViewModel
+import com.flasska.finapp.ui.elements.dialogadd.type.ExpenseTypeAddingViewModel
 import com.flasska.finapp.ui.screens.dayscreen.DayScreenViewModel
 import com.flasska.findata.di.UseCasesModule
 import dagger.BindsInstance
@@ -12,6 +14,10 @@ import javax.inject.Singleton
 @Component(modules = [UseCasesModule::class, ViewModelFactoryModule::class])
 internal interface AppComponent {
     fun provideDayScreenViewModelFactoryWrapper(): DayScreenViewModel.FactoryWrapper
+
+    fun provideExpenseViewModelFactoryWrapper(): ExpenseAddingViewModel.FactoryWrapper
+
+    fun provideExpenseTypeViewModelFactoryWrapper(): ExpenseTypeAddingViewModel.FactoryWrapper
 
     @Component.Builder
     interface Builder {

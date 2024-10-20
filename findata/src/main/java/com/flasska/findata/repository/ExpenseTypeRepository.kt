@@ -24,11 +24,12 @@ class ExpenseTypeRepository(
 
     override suspend fun delete(value: Expense.Type) {
         dao.deleteExpenseType(value.convert())
-        _flow.update { it - value }
+        getAll()
     }
 
     override suspend fun add(value: Expense.Type) {
-        dao.addExpenseType(value.convert())
-        _flow.update { it + value }
+        val converted = value.convert()
+        dao.addExpenseType(converted)
+        getAll()
     }
 }
