@@ -94,6 +94,7 @@ fun TypeDrawer(
     ) {
         Box(
             modifier = Modifier
+                .padding(top = 6.dp, bottom = 6.dp, start = 6.dp)
                 .size(12.dp)
                 .background(color = Color(type.color), shape = CircleShape)
         )

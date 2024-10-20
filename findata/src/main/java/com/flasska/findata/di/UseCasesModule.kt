@@ -6,8 +6,11 @@ import com.flasska.findomain.repository.StatisticRepository
 import com.flasska.findomain.usecase.AddUseCase
 import com.flasska.findomain.usecase.DeleteUseCase
 import com.flasska.findomain.usecase.GetAllUseCase
-import com.flasska.findomain.usecase.GetDayStatisticUseCase
-import com.flasska.findomain.usecase.GetMonthStatisticUseCase
+import com.flasska.findomain.usecase.GetAverageUseCase
+import com.flasska.findomain.usecase.GetDayExpensesUseCase
+import com.flasska.findomain.usecase.GetMonthExpensesUseCase
+import com.flasska.findomain.usecase.GetSumUseCase
+import com.flasska.findomain.usecase.GetTypeToSumUseCase
 import dagger.Module
 import dagger.Provides
 
@@ -46,10 +49,19 @@ class UseCasesModule {
     @Provides
     fun provideGetDayStatisticUseCase(
         repository: StatisticRepository
-    ) = GetDayStatisticUseCase(repository)
+    ) = GetDayExpensesUseCase(repository)
 
     @Provides
-    fun provideGetMonthStatisticRepository(
+    fun provideGetMonthStatisticUseCase(
         repository: StatisticRepository
-    ) = GetMonthStatisticUseCase(repository)
+    ) = GetMonthExpensesUseCase(repository)
+
+    @Provides
+    fun provideGetSumUseCase() = GetSumUseCase()
+
+    @Provides
+    fun provideGetAverageUseCase() = GetAverageUseCase()
+
+    @Provides
+    fun provideGetTypeToSumUseCase() = GetTypeToSumUseCase()
 }

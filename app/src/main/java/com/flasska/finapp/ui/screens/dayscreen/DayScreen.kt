@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.flasska.finapp.R
 import com.flasska.finapp.ui.elements.ExpenseList
 import com.flasska.finapp.ui.elements.dialog.expense.ExpenseAddingDialog
+import com.flasska.finapp.ui.elements.dialog.statistic.StatisticDialog
 import com.flasska.finapp.ui.utils.DateUtils.getDateInFormat
 
 @Composable
@@ -47,9 +48,15 @@ internal fun DayScreen(
     }
 
     if (addDialogIsOpen) {
-        ExpenseAddingDialog(onExit = { addDialogIsOpen = false })
+        ExpenseAddingDialog(
+            onExit = { addDialogIsOpen = false },
+            date = screenState.date
+        )
     } else if (statDialogIsOpen) {
-
+        StatisticDialog(
+            date = screenState.date,
+            onExit = { statDialogIsOpen = false }
+        )
     }
 }
 

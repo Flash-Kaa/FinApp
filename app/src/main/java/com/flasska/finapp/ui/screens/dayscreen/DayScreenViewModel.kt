@@ -3,7 +3,7 @@ package com.flasska.finapp.ui.screens.dayscreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.flasska.findomain.usecase.GetDayStatisticUseCase
+import com.flasska.findomain.usecase.GetDayExpensesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +14,7 @@ import java.time.LocalDate
 
 internal class DayScreenViewModel(
     date: LocalDate,
-
-    private val getDayStatisticUseCase: GetDayStatisticUseCase
+    private val getDayExpensesUseCase: GetDayExpensesUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow(DayScreenState(date = date))
     val state = _state.asStateFlow()
@@ -23,7 +22,7 @@ internal class DayScreenViewModel(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             while (true) {
-                val expenses = getDayStatisticUseCase(state.value.date)
+                val expenses = getDayExpensesUseCase(state.value.date)
                 _state.update { it.copy(expenses = expenses) }
                 delay(500)
             }
@@ -50,14 +49,14 @@ internal class DayScreenViewModel(
     }
 
     class FactoryWrapper(
-        private val getDayStatisticUseCase: GetDayStatisticUseCase
+        private val getDayExpensesUseCase: GetDayExpensesUseCase
     ) {
         inner class Factory(
             private val date: LocalDate
         ) : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return DayScreenViewModel(date, getDayStatisticUseCase) as T
+                return DayScreenViewModel(date, getDayExpensesUseCase) as T
             }
         }
     }

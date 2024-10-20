@@ -28,8 +28,7 @@ class ExpenseRepository(
     }
 
     override suspend fun add(value: Expense) {
-        val converted = value.convert()
-        dao.addExpenseValue(converted.expanse)
+        dao.addExpenseValue(value.convert().expanse)
         _flow.update { it + value }
     }
 }

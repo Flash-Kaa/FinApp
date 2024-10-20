@@ -17,7 +17,7 @@ internal class DbModule {
     ): ExpenseDao = Room.databaseBuilder(
         context = context,
         klass = AppDatabase::class.java,
-        name = "fin_db1"
+        name = "fin_db"
     )
         .build()
         .getDao()

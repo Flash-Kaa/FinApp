@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.flasska.finapp.ui.utils.DateUtils.getDateInFormat
 import com.flasska.findomain.entity.Expense
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 
 @Composable
@@ -24,7 +24,7 @@ fun ExpenseListByDate(list: List<Expense>) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
     ) {
-        var lastDate = LocalDateTime.MIN
+        var lastDate = LocalDate.MIN
 
         items(list) {
             if (it.dateTime != lastDate) {

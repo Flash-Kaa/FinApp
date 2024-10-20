@@ -4,10 +4,7 @@ import com.flasska.findata.db.entity.ExpenseDb
 import com.flasska.findata.db.entity.ExpenseTypeDb
 import com.flasska.findata.db.entity.ExpenseValueDb
 import com.flasska.findomain.entity.Expense
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
+import java.time.LocalDate
 
 object ExpenseMapperUtils {
     fun ExpenseTypeDb.convert(): Expense.Type {
@@ -21,10 +18,7 @@ object ExpenseMapperUtils {
     fun ExpenseDb.convert(): Expense {
         return Expense(
             id = expanse.id,
-            dateTime = LocalDateTime.ofInstant(
-                Instant.ofEpochSecond(expanse.dateTime),
-                ZoneId.systemDefault()
-            ),
+            dateTime = LocalDate.ofEpochDay(expanse.dateTime),
             value = expanse.value,
             type = type.convert()
         )
@@ -34,7 +28,7 @@ object ExpenseMapperUtils {
         return ExpenseDb(
             expanse = ExpenseValueDb(
                 id = id,
-                dateTime = dateTime.toEpochSecond(ZoneOffset.UTC),
+                dateTime = dateTime.toEpochDay(),
                 value = value,
                 typeId = type.id,
             ),

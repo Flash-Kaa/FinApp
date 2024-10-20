@@ -1,12 +1,17 @@
 package com.flasska.finapp.di
 
 import com.flasska.finapp.ui.elements.dialog.expense.ExpenseAddingViewModel
+import com.flasska.finapp.ui.elements.dialog.statistic.StatisticViewModel
 import com.flasska.finapp.ui.elements.dialog.type.ExpenseTypeAddingViewModel
 import com.flasska.finapp.ui.screens.dayscreen.DayScreenViewModel
 import com.flasska.findomain.entity.Expense
 import com.flasska.findomain.usecase.AddUseCase
 import com.flasska.findomain.usecase.GetAllUseCase
-import com.flasska.findomain.usecase.GetDayStatisticUseCase
+import com.flasska.findomain.usecase.GetAverageUseCase
+import com.flasska.findomain.usecase.GetDayExpensesUseCase
+import com.flasska.findomain.usecase.GetMonthExpensesUseCase
+import com.flasska.findomain.usecase.GetTypeToSumUseCase
+import com.flasska.findomain.usecase.GetSumUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,8 +21,8 @@ internal class ViewModelFactoryModule {
     @Provides
     @Singleton
     fun provideDayViewModelFactoryWrapper(
-        getDayStatisticUseCase: GetDayStatisticUseCase
-    ) = DayScreenViewModel.FactoryWrapper(getDayStatisticUseCase)
+        getDayExpensesUseCase: GetDayExpensesUseCase
+    ) = DayScreenViewModel.FactoryWrapper(getDayExpensesUseCase)
 
     @Provides
     @Singleton
@@ -31,4 +36,18 @@ internal class ViewModelFactoryModule {
     fun provideExpenseTypeAddViewModelFactoryWrapper(
         addUseCase: AddUseCase<Expense.Type>
     ) = ExpenseTypeAddingViewModel.FactoryWrapper(addUseCase)
+
+    @Provides
+    @Singleton
+    fun provideStatisticViewModelFactoryWrapper(
+        getMonthExpensesUseCase: GetMonthExpensesUseCase,
+        getSumUseCase: GetSumUseCase,
+        getAverageUseCase: GetAverageUseCase,
+        getTypeToSumUseCase: GetTypeToSumUseCase
+    ) = StatisticViewModel.FactoryWrapper(
+        getMonthExpensesUseCase = getMonthExpensesUseCase,
+        getSumUseCase = getSumUseCase,
+        getAverageUseCase = getAverageUseCase,
+        getTypeToSumUseCase = getTypeToSumUseCase
+    )
 }

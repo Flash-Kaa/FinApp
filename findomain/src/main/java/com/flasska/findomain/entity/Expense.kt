@@ -1,10 +1,10 @@
 package com.flasska.findomain.entity
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 data class Expense(
     val id: Int = 0,
-    val dateTime: LocalDateTime,
+    val dateTime: LocalDate,
     val value: Float,
     val type: Type
 ) {

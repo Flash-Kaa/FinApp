@@ -30,19 +30,21 @@ import com.flasska.finapp.ui.elements.CustomTextField
 import com.flasska.finapp.ui.elements.TopColorLine
 import com.flasska.finapp.ui.elements.TypesList
 import com.flasska.finapp.ui.theme.FinAppTheme
+import java.time.LocalDate
 
 @Composable
 fun ExpenseAddingDialog(
+    date: LocalDate,
     onExit: () -> Unit,
 ) {
     val viewModel: ExpenseAddingViewModel = viewModel(
         factory = LocalContext.current.appComponent
             .provideExpenseViewModelFactoryWrapper()
-            .Factory()
+            .Factory(date)
     )
 
     val state: DialogAddState by viewModel.state.collectAsState(DialogAddState())
-
+    viewModel.getEvent(DialogAddEvent.ChangeDate(date))
 
     ExpenseAddingDialog(
         onExit = onExit,

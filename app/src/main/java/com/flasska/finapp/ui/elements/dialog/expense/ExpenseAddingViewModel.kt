@@ -12,14 +12,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 
 internal class ExpenseAddingViewModel(
+    date: LocalDate,
     private val addUseCase: AddUseCase<Expense>,
     private val getTypesUseCase: GetAllUseCase<Expense.Type>
 ) : ViewModel() {
-    private val _state = MutableStateFlow(DialogAddState())
+    private val _state = MutableStateFlow(DialogAddState(date = date))
     val state = _state.asStateFlow()
 
     init {
@@ -40,6 +41,10 @@ internal class ExpenseAddingViewModel(
                 it.copy(value = event.value, valueIsError = event.value.toFloatOrNull() == null)
             }
 
+            is DialogAddEvent.ChangeDate -> _state.update {
+                it.copy(date = event.value)
+            }
+
             DialogAddEvent.Save -> save()
         }
     }
@@ -50,11 +55,11 @@ internal class ExpenseAddingViewModel(
             value.type?.let {
                 val float = value.value.toFloatOrNull()
                 if (float != null) {
-                    addUseCase(Expense(0, LocalDateTime.now(), float, it))
+                    addUseCase(Expense(0, state.value.date, float, it))
                 }
             }
 
-            _state.update { DialogAddState() }
+            _state.update { DialogAddState(types = it.types) }
         }
     }
 
@@ -62,10 +67,13 @@ internal class ExpenseAddingViewModel(
         private val addExpenseUseCase: AddUseCase<Expense>,
         private val getTypesUseCase: GetAllUseCase<Expense.Type>
     ) {
-        inner class Factory : ViewModelProvider.Factory {
+        inner class Factory(
+            private val date: LocalDate
+        ) : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return ExpenseAddingViewModel(
+                    date = date,
                     addUseCase = addExpenseUseCase,
                     getTypesUseCase = getTypesUseCase
                 ) as T

@@ -11,4 +11,7 @@
     <string name="see_one_day_ago">Показать предыдущий день</string>
     <string name="see_one_day_next">Показать следующий день</string>
     <string name="see_month_stat">Посмотреть статистику за месяц</string>
+    <string name="month_expenses">Траты за месяц: %1$s</string>
+    <string name="month_statistic">Статистика %1$s</string>
+    <string name="expenses_by_type">Траты по категориям</string>
 </resources>
