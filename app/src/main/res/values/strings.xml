@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Expenses</string>
+    <string name="app_name">Мои траты</string>
     <string name="create">Создать</string>
     <string name="expense">Трата</string>
     <string name="add_expense">Добавление траты</string>
