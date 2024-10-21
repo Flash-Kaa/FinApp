@@ -38,7 +38,11 @@ internal class ExpenseAddingViewModel(
             }
 
             is DialogAddEvent.ChangeValue -> _state.update {
-                it.copy(value = event.value, valueIsError = event.value.toFloatOrNull() == null)
+                it.copy(
+                    value = event.value,
+                    valueIsError = event.value.toFloatOrNull()
+                        ?.let { floatValue -> floatValue <= 0 } ?: true
+                )
             }
 
             is DialogAddEvent.ChangeDate -> _state.update {

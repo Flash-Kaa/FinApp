@@ -83,7 +83,7 @@ private fun ExpenseAddingDialog(
                 value = screenState.value,
                 onValueChange = { screenEvent(DialogAddEvent.ChangeValue(it)) },
                 title = stringResource(R.string.expense),
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Decimal,
                 borderColor = if (screenState.run { valueIsError && value.isNotBlank() }) {
                     MaterialTheme.colorScheme.error
                 } else {
